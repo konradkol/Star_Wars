@@ -1,0 +1,25 @@
+button {
+  cursor: pointer;
+}
+
+table {
+  border: 1px solid blue;
+}
+
+th,
+td {
+  border: 1px solid blue;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  border: 1px solid gray;
+  margin-bottom: 1px;
+}
+
+#show_category {
+  text-align: center;
+}
