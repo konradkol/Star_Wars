@@ -9,6 +9,7 @@
 
 const BASE_URL = "https://swapi.dev/api/";
 const table = document.querySelector("#itemsList_table");
+table.style = "border: none";
 const ul = document.querySelector("#itemDetails_list");
 let arrayWithObjInstance = [];
 let addHead = true;
@@ -421,8 +422,12 @@ function deleteItem(id) {
 
 async function showItemDetails(id) {
   ul.innerHTML = "";
+
+  const buttonDetails = document.querySelectorAll("#details_button");
   const findItem = arrayWithObjInstance.filter((el) => el.id === id)[0];
   const url = findItem.url;
+
+  buttonDetails.forEach((btn) => (btn.disabled = true));
 
   if (!state.collectionsData[clickedButton][findItem.name || findItem.title]) {
     const res = await fetch(url);
@@ -438,9 +443,13 @@ async function showItemDetails(id) {
   // console.log(item);
 
   Object.entries(item).forEach(([k, v]) => {
-    ul.innerHTML += `<li>${k}: ${v}</li>`;
+    ul.innerHTML += `<li>${k.toUpperCase()}: ${
+      Array.isArray(v) ? v.map((el) => `<li>${el}</li>`).join("") : v
+    }</li>`;
   });
   ul.innerHTML += `<button id="close_item-detais" onClick="closeItemDetails()">Close</button>`;
+
+  buttonDetails.forEach((btn) => (btn.disabled = false));
 
   // console.log(state);
 }
