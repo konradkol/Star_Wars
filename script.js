@@ -11,6 +11,7 @@ const BASE_URL = "https://swapi.dev/api/";
 const table = document.querySelector("#itemsList_table");
 table.style = "border: none";
 const ul = document.querySelector("#itemDetails_list");
+ul.style = "padding:0";
 let arrayWithObjInstance = [];
 let addHead = true;
 let clickedButton = "";

@@ -15,6 +15,9 @@ body {
 h1 {
   text-transform: uppercase;
   text-align: center;
+  color: #575656;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #49ff18,
+    0 0 30px #49ff18, 0 0 40px #49ff18, 0 0 55px #49ff18, 0 0 75px #49ff18;
 }
 
 .buttons {
@@ -25,45 +28,135 @@ h1 {
 }
 
 .buttons button {
-  width: 10%;
-  height: 3vh;
+  min-width: 10%;
+  margin: 0 2px;
+  /* height: 3vh; */
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  line-height: 20px;
+  padding: 6px;
+  border-radius: 10px;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  text-decoration: underline;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  background-image: linear-gradient(
+    to right,
+    rgb(28, 110, 164) 0%,
+    rgb(35, 136, 203) 50%,
+    rgb(20, 78, 117) 100%
+  );
+  box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px;
+  border: 2px solid rgb(28, 110, 164);
+  /* display: inline-block; */
+}
+
+.buttons button:hover {
+  background: #1c6ea4;
+  box-shadow: inset 5px 5px 15px 5px #000000;
+}
+
+.buttons button:active {
+  background: #144e75;
+
+  transform: scale(0.9);
 }
 
 #show_category {
+  font-size: 28px;
   text-align: center;
   margin: 20px 0;
 }
 
 .list {
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
 }
 
 .itemsList {
-  /* min-width: 50%; */
+}
+
+.itemsList button {
+  margin: 2px;
+  color: rgb(255, 255, 255);
+  padding: 3px;
+  border-radius: 3px;
+  font-weight: bold;
+  background-image: linear-gradient(
+    to right,
+    rgb(28, 110, 164) 0%,
+    rgb(35, 136, 203) 50%,
+    rgb(20, 78, 117) 100%
+  );
+  box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px;
+  border: 2px solid rgb(28, 110, 164);
+}
+
+.itemsList button:hover {
+  background: rgb(35, 136, 203);
+}
+
+.itemsList button:active {
+  background: #144e75;
+  transform: scale(0.9);
+}
+
+.itemsList button#delete_button {
+  background-image: linear-gradient(
+    to right,
+    rgb(164, 28, 28) 0%,
+    rgb(204, 54, 54) 50%,
+    rgb(126, 4, 4) 100%
+  );
+}
+
+.itemsList button#delete_button:hover {
+  background: rgb(204, 54, 54);
 }
 
 .itemDetails_list {
-  /* max-width: 60%; */
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
-  /* align-items: center; */
   flex-wrap: wrap;
-  /* overflow: auto; */
-  /* min-width: 50%; */
 }
 
 .itemDetails_list li {
   max-width: 70vw;
-  overflow: auto;
   display: flex;
   justify-content: center;
 }
 
 .itemDetails_list button {
-  /* max-width: 70vw; */
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  line-height: 20px;
+  padding: 6px;
+  border-radius: 8px;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  text-decoration: underline;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  background-image: linear-gradient(
+    to right,
+    rgb(153, 160, 165) 0%,
+    rgb(74, 75, 77) 50%,
+    rgb(144, 151, 155) 80%
+  );
+  box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px;
+  border: 2px solid rgb(28, 110, 164);
+}
+
+.itemDetails_list button:hover {
+  background: rgb(74, 75, 77);
+}
+
+.itemDetails_list button:active {
+  color: #000;
+  transform: scale(0.9);
 }
 
 button {
@@ -71,8 +164,12 @@ button {
 }
 
 table {
+  margin-right: 15px;
+  padding: 5px;
   border: 1px solid blue;
+  border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.8);
+
   /* opacity: 0.8; */
 }
 
@@ -82,6 +179,8 @@ td {
 }
 
 ul {
+  padding: 15px;
+  border-radius: 10px;
   list-style: none;
   background-color: rgba(0, 0, 0, 0.8);
 }
@@ -96,11 +195,14 @@ li {
     margin: 20px 2px;
   }
 
+  .buttons button {
+    /* margin: 0; */
+    font-size: 16px;
+  }
+
   .list {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    /* justify-content: center; */
   }
 
   .itemsList {
@@ -109,5 +211,9 @@ li {
 
   .itemDetails_list li {
     max-width: 100vw;
+  }
+
+  table {
+    margin-right: 0;
   }
 }
