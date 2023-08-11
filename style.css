@@ -4,15 +4,107 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: #26e90c;
+}
+
 body {
+  /* position: relative; */
   margin: 20px;
   font-size: 20px;
   background-image: url(./star_wars_1280.jpg);
   background-size: cover;
-  color: rgb(38, 233, 12);
+  color: #26e90c;
+}
+
+.confirm_deleteItem {
+  position: fixed;
+  left: 50%;
+  top: -20%;
+  transform: translate(-50%, 0);
+  background-color: #575656;
+  font-size: 30px;
+  font-weight: bold;
+  color: #7e0404;
+  border: 3px solid #000;
+  border-radius: 10px;
+  padding: 10px;
+  opacity: 0;
+}
+
+.visibility {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  transition: 1s;
+}
+
+.confirm_deleteItem p {
+  margin-bottom: 15px;
+}
+
+.confirm_deleteItem div {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 5px;
+}
+
+/* wspolne style dla button-ow w modalu potwierdzajacym usuniecie itema */
+
+.confirm_deleteItem div button {
+  margin-right: 10px;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-weight: bold;
+  background-image: linear-gradient(
+    to right,
+    #1c6ea4 0%,
+    #2388cb 50%,
+    #144e75 100%
+  );
+  box-shadow: #000 5px 5px 15px 5px;
+  border: 2px solid #1c6ea4;
+}
+
+.confirm_deleteItem div button:hover {
+  background: #1c6ea4;
+  box-shadow: inset 5px 5px 15px 5px #000;
+}
+
+.confirm_deleteItem div button:active {
+  background: #144e75;
+
+  transform: scale(0.9);
+}
+
+/* style dla buttona yes w modalu*/
+
+.confirm_deleteItem div .confirm_buttonYes {
+  background-image: linear-gradient(
+    to right,
+    #a41c1c 0%,
+    #cc3636 50%,
+    #7e0404 100%
+  );
+}
+
+.confirm_deleteItem div .confirm_buttonYes:hover {
+  color: #cc3636;
+}
+
+.confirm_deleteItem div .confirm_buttonNo {
 }
 
 h1 {
+  margin: 25px 0 35px 0;
   text-transform: uppercase;
   text-align: center;
   color: #575656;
@@ -31,7 +123,7 @@ h1 {
   min-width: 10%;
   margin: 0 2px;
   /* height: 3vh; */
-  color: rgb(255, 255, 255);
+  color: #fff;
   font-size: 20px;
   line-height: 20px;
   padding: 6px;
@@ -44,18 +136,18 @@ h1 {
   text-transform: none;
   background-image: linear-gradient(
     to right,
-    rgb(28, 110, 164) 0%,
-    rgb(35, 136, 203) 50%,
-    rgb(20, 78, 117) 100%
+    #1c6ea4 0%,
+    #2388cb 50%,
+    #144e75 100%
   );
-  box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px;
-  border: 2px solid rgb(28, 110, 164);
+  box-shadow: #000 5px 5px 15px 5px;
+  border: 2px solid #1c6ea4;
   /* display: inline-block; */
 }
 
 .buttons button:hover {
   background: #1c6ea4;
-  box-shadow: inset 5px 5px 15px 5px #000000;
+  box-shadow: inset 5px 5px 15px 5px #000;
 }
 
 .buttons button:active {
@@ -78,92 +170,7 @@ h1 {
 .itemsList {
 }
 
-.itemsList button {
-  margin: 2px;
-  color: rgb(255, 255, 255);
-  padding: 3px;
-  border-radius: 3px;
-  font-weight: bold;
-  background-image: linear-gradient(
-    to right,
-    rgb(28, 110, 164) 0%,
-    rgb(35, 136, 203) 50%,
-    rgb(20, 78, 117) 100%
-  );
-  box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px;
-  border: 2px solid rgb(28, 110, 164);
-}
-
-.itemsList button:hover {
-  background: rgb(35, 136, 203);
-}
-
-.itemsList button:active {
-  background: #144e75;
-  transform: scale(0.9);
-}
-
-.itemsList button#delete_button {
-  background-image: linear-gradient(
-    to right,
-    rgb(164, 28, 28) 0%,
-    rgb(204, 54, 54) 50%,
-    rgb(126, 4, 4) 100%
-  );
-}
-
-.itemsList button#delete_button:hover {
-  background: rgb(204, 54, 54);
-}
-
-.itemDetails_list {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-
-.itemDetails_list li {
-  max-width: 70vw;
-  display: flex;
-  justify-content: center;
-}
-
-.itemDetails_list button {
-  color: rgb(255, 255, 255);
-  font-size: 18px;
-  line-height: 20px;
-  padding: 6px;
-  border-radius: 8px;
-  font-family: Georgia, serif;
-  font-weight: bold;
-  text-decoration: underline;
-  font-style: normal;
-  font-variant: normal;
-  text-transform: none;
-  background-image: linear-gradient(
-    to right,
-    rgb(153, 160, 165) 0%,
-    rgb(74, 75, 77) 50%,
-    rgb(144, 151, 155) 80%
-  );
-  box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px;
-  border: 2px solid rgb(28, 110, 164);
-}
-
-.itemDetails_list button:hover {
-  background: rgb(74, 75, 77);
-}
-
-.itemDetails_list button:active {
-  color: #000;
-  transform: scale(0.9);
-}
-
-button {
-  cursor: pointer;
-}
-
-table {
+.itemsList table {
   margin-right: 15px;
   padding: 5px;
   border: 1px solid blue;
@@ -175,19 +182,142 @@ table {
 
 th,
 td {
-  border: 1px solid blue;
+  border: 1px solid #0000ff;
 }
 
-ul {
-  padding: 15px;
+.itemsList button {
+  margin: 2px;
+  color: #fff;
+  padding: 3px;
+  border-radius: 3px;
+  font-weight: bold;
+  background-image: linear-gradient(
+    to right,
+    #1c6ea4 0%,
+    #2388cb 50%,
+    #144e75 100%
+  );
+  box-shadow: #000 5px 5px 15px 5px;
+  border: 2px solid #1c6ea4;
+}
+
+.itemsList button:hover {
+  background: #2388cb;
+}
+
+.itemsList button:active {
+  background: #144e75;
+  transform: scale(0.9);
+}
+
+.itemsList button#delete_button {
+  background-image: linear-gradient(
+    to right,
+    #a41c1c 0%,
+    #cc3636 50%,
+    #7e0404 100%
+  );
+}
+
+.itemsList button#delete_button:hover {
+  background: #cc3636;
+}
+
+#pagination {
+  display: flex;
+  align-items: center;
+}
+
+#input_howManyItemsShow {
+  border-radius: 5px;
+  font-size: 18px;
+  /* padding: 4px; */
+}
+
+.itemDetails_list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* padding: 15px; */
   border-radius: 10px;
   list-style: none;
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-li {
-  border: 1px solid gray;
+.itemDetails_list li {
+  max-width: 70vw;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #808080;
   margin-bottom: 1px;
+}
+
+.itemDetails_list button {
+  color: #fff;
+  font-size: 18px;
+  line-height: 20px;
+  padding: 6px;
+  border-radius: 8px;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  text-decoration: underline;
+  text-transform: none;
+  background-image: linear-gradient(
+    to right,
+    #99a0a5 0%,
+    #4a4b4d 50%,
+    #90979b 80%
+  );
+  box-shadow: #000 5px 5px 15px 5px;
+  border: 2px solid #1c6ea4;
+}
+
+.itemDetails_list button:hover {
+  background: #4a4b4d;
+}
+
+.itemDetails_list button:active {
+  color: #000;
+  transform: scale(0.9);
+}
+
+button {
+  cursor: pointer;
+}
+
+.blur {
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.showPopup {
+  display: block;
+}
+
+.loader {
+  animation: rotateX 0.8s infinite ease-in-out;
+  height: 150px;
+  width: 150px;
+  border: 20px dashed #26e90c;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+}
+
+@keyframes rotateX {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
 }
 
 @media (max-width: 900px) {

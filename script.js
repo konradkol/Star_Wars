@@ -11,7 +11,8 @@ const BASE_URL = "https://swapi.dev/api/";
 const table = document.querySelector("#itemsList_table");
 table.style = "border: none";
 const ul = document.querySelector("#itemDetails_list");
-ul.style = "padding:0";
+const main = document.querySelector("main");
+const popup = document.querySelector(".popup");
 let arrayWithObjInstance = [];
 let addHead = true;
 let clickedButton = "";
@@ -280,8 +281,11 @@ function displayList(collectionsDataList) {
 
       //  po kliknieciu na inna kolekcje (innny button) czyszcze zawartosc kontenera na detailsy danego itema
       ul.innerHTML = "";
+      ul.style = "padding:0";
 
       if (!collectionsDataList[clickedButton]) {
+        main.classList.add("blur");
+        popup.classList.add("showPopup");
         await fetchData(
           BASE_URL + btn.innerText,
           `collectionsData.${btn.innerText}`
@@ -292,6 +296,8 @@ function displayList(collectionsDataList) {
 
       // table.innerHTML = null;
       createArrayWithObjInstance();
+      popup.classList.remove("showPopup");
+      main.classList.remove("blur");
       fillTable(arrayWithObjInstance);
       addPagination();
     })
@@ -406,23 +412,50 @@ function fillTable(array) {
 }
 
 function deleteItem(id) {
-  if (confirm("Are you sure ???")) {
-    ul.innerHTML = "";
+  // tworzę modal potwierdzający usunięcie wybranego elementu
+  const confirmModal = document.querySelector(".confirm_deleteItem");
+  confirmModal.classList.add("visibility");
+  const messageParagraph = document.createElement("p");
+  messageParagraph.classList.add("confirm_message");
+  messageParagraph.innerText = "Do you want to delete choose item ???";
+  confirmModal.appendChild(messageParagraph);
+  const div = document.createElement("div");
+  confirmModal.appendChild(div);
+  const buttonYes = document.createElement("button");
+  buttonYes.classList.add("confirm_buttonYes");
+  buttonYes.innerText = "Yes";
+  div.appendChild(buttonYes);
+  const buttonNo = document.createElement("button");
+  buttonNo.classList.add("confirm_buttonNo");
+  buttonNo.innerText = "No";
+  div.appendChild(buttonNo);
 
-    arrayWithObjInstance = arrayWithObjInstance.filter((el) => el.id !== id);
-    console.log(arrayWithObjInstance);
-    fillTable(arrayWithObjInstance);
-    // aktualizuje stan aplikacji
-    state.collectionsData[clickedButton].newResults = state.collectionsData[
-      clickedButton
-    ].newResults.map((arr) => arr.filter((el) => el.id !== id));
+  // logika
+  function handlerClick(e) {
+    if (buttonYes.contains(e.target)) {
+      // console.log("deleted");
+      ul.innerHTML = "";
+      ul.style = "padding: 0";
+      arrayWithObjInstance = arrayWithObjInstance.filter((el) => el.id !== id);
+      console.log(arrayWithObjInstance);
+      fillTable(arrayWithObjInstance);
+      // aktualizuje stan aplikacji
+      state.collectionsData[clickedButton].newResults = state.collectionsData[
+        clickedButton
+      ].newResults.map((arr) => arr.filter((el) => el.id !== id));
+      // console.log(state);
+    }
 
-    // console.log(state);
+    confirmModal.innerHTML = "";
+    confirmModal.classList.remove("visibility");
+    window.removeEventListener("click", handlerClick, true);
   }
+  window.addEventListener("click", handlerClick, true);
 }
 
 async function showItemDetails(id) {
   ul.innerHTML = "";
+  ul.style = "padding: 0";
 
   const buttonDetails = document.querySelectorAll("#details_button");
   const findItem = arrayWithObjInstance.filter((el) => el.id === id)[0];
@@ -431,6 +464,8 @@ async function showItemDetails(id) {
   buttonDetails.forEach((btn) => (btn.disabled = true));
 
   if (!state.collectionsData[clickedButton][findItem.name || findItem.title]) {
+    main.classList.add("blur");
+    popup.classList.add("showPopup");
     const res = await fetch(url);
     const data = await res.json();
     // dodaje do state szczegoly danego itema
@@ -449,14 +484,16 @@ async function showItemDetails(id) {
     }</li>`;
   });
   ul.innerHTML += `<button id="close_item-detais" onClick="closeItemDetails()">Close</button>`;
-
+  ul.style = "padding: 15px";
   buttonDetails.forEach((btn) => (btn.disabled = false));
-
+  main.classList.remove("blur");
+  popup.classList.remove("showPopup");
   // console.log(state);
 }
 
 function closeItemDetails() {
   ul.innerHTML = "";
+  ul.style = "padding: 0";
 }
 
 function addPagination() {
@@ -474,8 +511,10 @@ function addPagination() {
   const input = document.createElement("input");
   input.setAttribute("type", "number");
   input.setAttribute("id", "input_howManyItemsShow");
-  input.placeholder = "Wpisz liczbę obiektów";
+  // input.placeholder = "Wpisz liczbę obiektów";
   input.defaultValue = 10;
+  input.min = 1;
+  input.max = 10;
   div.appendChild(input);
   lastPage = Math.ceil(amountAllItems / Number(input.value));
   console.log("lastPage", lastPage);
@@ -491,7 +530,7 @@ function addPagination() {
 
   prevButton.addEventListener("click", () => {
     --currentPage;
-    input.value = "";
+    // input.value = "";
     if (currentPage <= 1) {
       prevButton.disabled = true;
     } else {
@@ -503,7 +542,9 @@ function addPagination() {
       nextButton.disabled = false;
     }
 
+    input.defaultValue = 10;
     ul.innerHTML = "";
+    ul.style = "padding: 0";
 
     createArrayWithObjInstance();
     fillTable(arrayWithObjInstance);
@@ -513,7 +554,6 @@ function addPagination() {
 
   nextButton.addEventListener("click", async () => {
     currentPage++;
-    input.value = "";
     console.log("lastPage", lastPage);
     if (currentPage <= 1) {
       prevButton.disabled = true;
@@ -526,9 +566,13 @@ function addPagination() {
       nextButton.disabled = false;
     }
 
+    input.defaultValue = 10;
     ul.innerHTML = "";
+    ul.style = "padding: 0";
 
     if (!state.collectionsData[clickedButton].newResults[currentPage - 1]) {
+      main.classList.add("blur");
+      popup.classList.add("showPopup");
       const res = await fetch(
         BASE_URL + clickedButton + "/?page=" + currentPage
       );
@@ -553,6 +597,8 @@ function addPagination() {
     fillTable(arrayWithObjInstance);
     howManyItemsShow(arrayWithObjInstance);
     divShowCategory.innerText = `${clickedButton.toUpperCase()} (strona: ${currentPage}):`;
+    main.classList.remove("blur");
+    popup.classList.remove("showPopup");
   });
 
   howManyItemsShow(arrayWithObjInstance);
@@ -560,7 +606,7 @@ function addPagination() {
 
 function howManyItemsShow(array) {
   const input = document.querySelector("#input_howManyItemsShow");
-  input.addEventListener("input", () => {
+  input.addEventListener("change", () => {
     let splicedArray = [];
     let indexStart = 0;
     let indexEnd = indexStart + Number(input.value);
